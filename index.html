@@ -12,12 +12,25 @@
 
 <body>
   <insert-html link="https://swag31415.github.io/Portfolio/inserts/menu.html"></insert-html>
-  <main class="container">
-    <!-- TODO Add body -->
+  <main class="container" id="app">
+    <h1>Sudoku</h1>
+    <p>Relax and watch your computer play sudoku.</p>
+    <div class="row">
+      <button class="btn amber" @click="solve()">Solve</button>
+    </div>
+    <table class="sudoku">
+      <tr v-for="row, r in sol">
+        <td v-for="val, c in row" :class="['r'+(r+1), 'c'+(c+1), 'b'+kobe(r+1, c+1), 'tile', 'hoverable']" v-text="val"></td>
+      </tr>
+    </table>
   </main>
   <insert-html link="https://swag31415.github.io/Portfolio/inserts/foot.html"></insert-html>
   <!-- HTML Inserts -->
   <script src="https://swag31415.github.io/Portfolio/js/html_inserts.js"></script>
+  <!-- Vue.js -->
+  <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.prod.js"></script>
+  <!-- The Solver -->
+  <script src="js/kudoku.js"></script>
   <!-- Our Scripts -->
   <script src="js/main.js"></script>
 </body>
