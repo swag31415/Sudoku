@@ -16,7 +16,12 @@
     <h1>Sudoku</h1>
     <p>Relax and watch your computer play sudoku.</p>
     <div class="row">
-      <button class="btn amber" @click="solve()">Solve</button>
+      <div class="col">
+        <button class="btn amber" @click="loop()">Start</button>
+      </div>
+      <div class="col">
+        <button class="btn light-blue" @click="stop()">Stop</button>
+      </div>
     </div>
     <table class="sudoku">
       <tr v-for="row, r in sol">
