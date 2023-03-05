@@ -23,11 +23,9 @@
         <button class="btn light-blue" @click="stop()">Stop</button>
       </div>
     </div>
-    <table class="sudoku">
-      <tr v-for="row, r in sol">
-        <td v-for="val, c in row" :class="['r'+(r+1), 'c'+(c+1), 'b'+kobe(r+1, c+1), 'tile', 'hoverable']" v-text="val"></td>
-      </tr>
-    </table>
+    <div class="sudoku">
+      <div class="sudoku-cell" v-for="k in sol" v-text="k.val" :class="k.is_prob ? 'white-text' : 'light-green-text'"></div>
+    </div>
   </main>
   <insert-html link="https://swag31415.github.io/Portfolio/inserts/foot.html"></insert-html>
   <!-- HTML Inserts -->

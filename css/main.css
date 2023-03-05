@@ -1,22 +1,81 @@
-table.sudoku {
-  width: auto;
+.sudoku {
+  display: grid;
+  grid-template-rows: repeat(9, 1fr);
+  grid-template-columns: repeat(9, 1fr);
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  background-color: #222;
+  background-image: url('../tile.jpg');
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden; /* hide overflowing cells */
+  aspect-ratio: 1 / 1; /* make height equal to width */
 }
-.sudoku td {
-  width: 3em;
-  height: 3em;
-  border: 1px solid;
-  text-align: center;
-  cursor: pointer;
+
+.sudoku>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  width: 100%;
+  /* make cells fill their grid space */
+  height: 100%;
+  background-color: #222a;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
 }
-td.c1 {
-  border-left: solid;
+
+.sudoku>div:nth-child(3n) {
+  border-right: 2px solid white;
 }
-td.c3,td.c6,td.c9 {
-  border-right: solid ;
+
+.sudoku>div:nth-child(9n) {
+  border-right: 2px solid white;
 }
-td.r1 {
-  border-top: solid;
+
+.sudoku>div:nth-child(27n-0),
+.sudoku>div:nth-child(27n-1),
+.sudoku>div:nth-child(27n-2),
+.sudoku>div:nth-child(27n-3),
+.sudoku>div:nth-child(27n-4),
+.sudoku>div:nth-child(27n-5),
+.sudoku>div:nth-child(27n-6),
+.sudoku>div:nth-child(27n-7),
+.sudoku>div:nth-child(27n-8) {
+  border-bottom: 2px solid white;
 }
-td.r3,td.r6,td.r9 {
-  border-bottom: solid;
+
+.sudoku>div:nth-child(n+73) {
+  border-bottom: 2px solid white;
+}
+
+.sudoku>div.placeholder {
+  background-color: #eee;
+}
+
+.sudoku>div:hover {
+  background-color: #444;
+  transform: rotate(12deg);
+}
+
+.sudoku>div.selected {
+  transform: scale(1.05);
+}
+
+.sudoku>div.filled {
+  animation-name: filled-cell;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes filled-cell {
+  from {
+    background-color: #222a;
+  }
+
+  to {
+    background-color: #0f0a;
+  }
 }

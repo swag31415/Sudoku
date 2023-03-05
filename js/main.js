@@ -2,46 +2,38 @@ function rand(n) {
   return Math.floor(Math.random() * n)
 }
 
-const nums = [1,2,3,4,5,6,7,8,9]
+const SOL_LEN = 81
 let solver = sudoku_solver()
-
-function get_blank(n) {
-  let blank = Array.from({length: 81}, () => '.')
-  for (let i = 0; i < n; i++) {
-    blank[rand(blank.length)] = nums[rand(nums.length)]
-  }
-  return blank
-}
-
-function unflatten(doku) {
-  return Array.from({length: 9}, (_,i) => doku.slice(9*i, 9*(i+1)))
-}
 
 const { createApp } = Vue
 const app = createApp({
   data() { return {
-    nums: [1,2,3,4,5,6,7,8,9],
-    sol: Array.from({length: 9}, () => Array.from({length: 9}, () => '.'))
+    sol: Array.from({length: SOL_LEN}, (_,i) => ({val: 'SUDOKU'[i%6], is_prob: true}))
   }},
   methods: {
-    kobe(r, c) {
-      return 3 * Math.floor((r - 1) / 3) + Math.floor((c - 1) / 3) + 1
-    },
-    async solve() {
-      let out = null
-      while (!out) {
-        out = get_blank(5)
-        this.sol = unflatten(out)
-        await new Promise(ret => setTimeout(ret, 500))
-        out = solver(out.join(''), 1)[0]
+    get_pair(n) {
+      let prob = null
+      let sol = null
+      while (!sol) {
+        prob = Array.from({length: SOL_LEN}, () => '.')
+        for (let i = 0; i < n; i++) {
+          prob[rand(prob.length)] = rand(9)+1
+        }
+        prob = prob.join('')
+        sol = solver(prob, 1)[0]
       }
-      this.sol = unflatten(out)
+      return [prob, sol]
     },
     async loop() {
       if (this.looping) return;
       this.looping = true
       while (this.looping) {
-        await this.solve()
+        let [prob, sol] = this.get_pair(5)
+        this.sol = this.sol.map((k, i) => prob[i] == '.' ? {val: '', is_prob: false} : {val: prob[i], is_prob: true})
+        await new Promise(ret => setTimeout(ret, 200))
+        for (let i = 0; i < SOL_LEN; i++) {
+          if (!this.sol[i].is_prob) this.sol[i].val = sol[i]
+        }
         await new Promise(ret => setTimeout(ret, 800))
       }
     },
