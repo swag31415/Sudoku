@@ -79,3 +79,12 @@
     background-color: #0f0a;
   }
 }
+
+.lined {
+  display: flex;
+  align-items: center;
+}
+
+.slider-image {
+  font-size: 2rem;
+}

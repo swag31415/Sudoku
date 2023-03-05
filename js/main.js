@@ -8,7 +8,8 @@ let solver = sudoku_solver()
 const { createApp } = Vue
 const app = createApp({
   data() { return {
-    sol: Array.from({length: SOL_LEN}, (_,i) => ({val: 'SUDOKU'[i%6], is_prob: true}))
+    sol: Array.from({length: SOL_LEN}, (_,i) => ({val: 'SUDOKU'[i%6], is_prob: true})),
+    delay: 1000,
   }},
   methods: {
     get_pair(n) {
@@ -30,11 +31,11 @@ const app = createApp({
       while (this.looping) {
         let [prob, sol] = this.get_pair(5)
         this.sol = this.sol.map((k, i) => prob[i] == '.' ? {val: '', is_prob: false} : {val: prob[i], is_prob: true})
-        await new Promise(ret => setTimeout(ret, 200))
+        await new Promise(ret => setTimeout(ret, this.delay * 0.2))
         for (let i = 0; i < SOL_LEN; i++) {
           if (!this.sol[i].is_prob) this.sol[i].val = sol[i]
         }
-        await new Promise(ret => setTimeout(ret, 800))
+        await new Promise(ret => setTimeout(ret, this.delay * 0.8))
       }
     },
     stop() {
@@ -42,3 +43,5 @@ const app = createApp({
     }
   }
 }).mount('#app')
+
+console.log(document.querySelector('#app'))

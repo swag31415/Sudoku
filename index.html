@@ -26,6 +26,13 @@
     <div class="sudoku">
       <div class="sudoku-cell" v-for="k in sol" v-text="k.val" :class="k.is_prob ? 'white-text' : 'light-green-text'"></div>
     </div>
+    <div class="lined">
+      <span style="font-size: 3rem;">&#129422;</span>
+      <div class="slider" style="height: 2px; padding-bottom: 2rem;">
+        <input type="range" min="0" max="1000" v-model="delay" class="slider-input">
+      </div>  
+      <span style="font-size: 3rem;">&#128012;</span>
+    </div>
   </main>
   <insert-html link="https://swag31415.github.io/Portfolio/inserts/foot.html"></insert-html>
   <!-- HTML Inserts -->
